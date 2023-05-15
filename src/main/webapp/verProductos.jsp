@@ -25,10 +25,13 @@
 		  <tbody>
 		  	<c:forEach items="${ productos }" var="producto">
 		  		<tr>
-			      <th scope="row">1</th>
-			      <td>Mark</td>
-			      <td>Otto</td>
-			      <td>@mdo</td>
+			      <th scope="row">${ producto.id }</th>
+			      <td>${ producto.codigo }</td>
+			      <td>${ producto.nombre }</td>
+			      <td>${ producto.cantidad }</td>
+			      <td>${ producto.precio }</td>
+			      <td>${ producto.caducidad }</td>
+			      <td>Vacio</td>
 			    </tr>
 		  	</c:forEach>
 		  </tbody>
