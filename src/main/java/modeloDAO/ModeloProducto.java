@@ -14,6 +14,9 @@ public class ModeloProducto extends Conector{
 		try {
 			PreparedStatement pst = super.con.prepareStatement(st);
 			
+			ModeloSeccion modeloSeccion = new ModeloSeccion();
+			modeloSeccion.conectar();
+			
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
 				Producto producto = new Producto();
@@ -24,16 +27,12 @@ public class ModeloProducto extends Conector{
 				producto.setCantidad(rs.getInt("cantidad"));
 				producto.setPrecio(rs.getDouble("precio"));
 				producto.setCaducidad(rs.getDate("caducidad"));
-				
-				ModeloSeccion modeloSeccion = new ModeloSeccion();
-				modeloSeccion.conectar();
-				
 				producto.setSeccion(modeloSeccion.getSeccion(rs.getInt("id_seccion")));
-				
-				modeloSeccion.cerrar();
 				
 				productos.add(producto);
 			}
+			
+			modeloSeccion.cerrar();
 			
 			return productos;
 		} catch (SQLException e) {
