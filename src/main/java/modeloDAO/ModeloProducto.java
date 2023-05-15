@@ -25,6 +25,13 @@ public class ModeloProducto extends Conector{
 				producto.setPrecio(rs.getDouble("precio"));
 				producto.setCaducidad(rs.getDate("caducidad"));
 				
+				ModeloSeccion modeloSeccion = new ModeloSeccion();
+				modeloSeccion.conectar();
+				
+				producto.setSeccion(modeloSeccion.getSeccion(rs.getInt("id_seccion")));
+				
+				modeloSeccion.cerrar();
+				
 				productos.add(producto);
 			}
 			
