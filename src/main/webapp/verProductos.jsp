@@ -31,7 +31,7 @@
 			      <td>${ producto.cantidad }</td>
 			      <td>${ producto.precio }</td>
 			      <td>${ producto.caducidad }</td>
-			      <td>Vacio</td>
+			      <td>${ producto.seccion.nombre }</td>
 			    </tr>
 		  	</c:forEach>
 		  </tbody>
