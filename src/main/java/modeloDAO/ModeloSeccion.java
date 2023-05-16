@@ -3,6 +3,7 @@ package modeloDAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import modeloDTO.Seccion;
 
@@ -18,12 +19,37 @@ public class ModeloSeccion extends Conector{
 			ResultSet rs = pst.executeQuery();
 			rs.next();
 			
-			Seccion seccion = new Seccion();
+			return rellenarSeccion(rs);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+	private Seccion rellenarSeccion(ResultSet rs) throws SQLException {
+		Seccion seccion = new Seccion();
+		
+		seccion.setId(rs.getInt("id"));
+		seccion.setNombre(rs.getString("nombre"));
+		
+		return seccion;
+	}
+	
+	public ArrayList<Seccion> getAllSecciones() {
+		String st = "select * from secciones";
+		ArrayList<Seccion> secciones = new ArrayList<>();
+		
+		try {
+			PreparedStatement pst = super.con.prepareStatement(st);
 			
-			seccion.setId(rs.getInt("id"));
-			seccion.setNombre(rs.getString("nombre"));
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				secciones.add(rellenarSeccion(rs));
+			}
 			
-			return seccion;
+			return secciones;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
