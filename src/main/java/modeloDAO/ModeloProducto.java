@@ -29,6 +29,26 @@ public class ModeloProducto extends Conector{
 		}
 	}
 	
+	public boolean codigoExiste(String codigo) {
+		String st = "select codigo from productos where codigo=?";
+		
+		try {
+			PreparedStatement pst = super.con.prepareStatement(st);
+			
+			pst.setString(1, codigo);
+			
+			ResultSet rs = pst.executeQuery();
+			rs.next();
+			
+			return codigo.equals(rs.getString("codigo")) ? true : false;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
 	public ArrayList<Producto> getAllProductos() {
 		String st = "select * from productos";
 		ArrayList<Producto> productos = new ArrayList<Producto>();
