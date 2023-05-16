@@ -10,7 +10,7 @@ import modeloDTO.Producto;
 
 public class ModeloProducto extends Conector{
 	public void insertarProducto(Producto producto) {
-		String st = "insert into productos (codigo, nombre, cantidad, precio, caducidad) values (?,?,?,?,?)";
+		String st = "insert into productos (codigo, nombre, cantidad, precio, caducidad, id_seccion) values (?,?,?,?,?,?)";
 		
 		try {
 			PreparedStatement pst = super.con.prepareStatement(st);
@@ -20,6 +20,7 @@ public class ModeloProducto extends Conector{
 			pst.setInt(3, producto.getCantidad());
 			pst.setDouble(4, producto.getPrecio());
 			pst.setDate(5, new Date(producto.getCaducidad().getTime()));
+			pst.setInt(6, producto.getSeccion().getId());
 			
 			pst.execute();
 		} catch (SQLException e) {
