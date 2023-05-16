@@ -10,7 +10,10 @@
 </head>
 <body class="d-flex justify-content-center align-items-center" style="width: 100vw; min-height: 100vh">
 	<section class="container">
-		<table class="table">
+		<div class="row container">
+			<a class="btn btn-primary" href="InsertarProducto">Insertar</a>
+		</div>
+		<table class="table table-striped">
 		  <thead>
 		    <tr>
 		      <th scope="col">#</th>
