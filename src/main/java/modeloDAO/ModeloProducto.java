@@ -1,5 +1,6 @@
 package modeloDAO;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,6 +9,25 @@ import java.util.ArrayList;
 import modeloDTO.Producto;
 
 public class ModeloProducto extends Conector{
+	public void insertarProducto(Producto producto) {
+		String st = "insert into productos (codigo, nombre, cantidad, precio, caducidad) values (?,?,?,?,?)";
+		
+		try {
+			PreparedStatement pst = super.con.prepareStatement(st);
+			
+			pst.setString(1, producto.getCodigo());
+			pst.setString(2, producto.getNombre());
+			pst.setInt(3, producto.getCantidad());
+			pst.setDouble(4, producto.getPrecio());
+			pst.setDate(5, new Date(producto.getCaducidad().getTime()));
+			
+			pst.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public ArrayList<Producto> getAllProductos() {
 		String st = "select * from productos";
 		ArrayList<Producto> productos = new ArrayList<Producto>();
