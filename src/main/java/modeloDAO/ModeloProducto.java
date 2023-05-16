@@ -40,7 +40,7 @@ public class ModeloProducto extends Conector{
 			ResultSet rs = pst.executeQuery();
 			rs.next();
 			
-			return codigo.equals(rs.getString("codigo")) ? true : false;
+			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
