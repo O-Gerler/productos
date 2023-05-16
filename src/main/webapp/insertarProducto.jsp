@@ -10,7 +10,7 @@
 </head>
 <body class="d-flex justify-content-center align-items-center" style="width: 100vw; min-height: 100vh">
 	<section class="container">
-		<form>
+		<form method="POST" action="InsertarProducto">
 		  <div class="mb-3">
 		    <label for="codigo" class="form-label">Codigo</label>
 		    <input type="text" class="form-control" id="codigo" name="codigo">
@@ -25,13 +25,24 @@
 		  </div>
 		  <div class="mb-3">
 		    <label for="precio" class="form-label">Precio</label>
-		    <input type="number" class="form-control" id="precio" name="precio">
+		    <input type="text" class="form-control" id="precio" name="precio">
 		  </div>
 		  <div class="mb-3">
 		    <label for="caducidad" class="form-label">Caducidad</label>
 		    <input type="date" class="form-control" id="caducidad" name="caducidad">
 		  </div>
-		  <button type="submit" class="btn btn-primary">Enviar</button>
+		  <div class="mb-3">
+		    <label for="caducidad" class="form-label">Seccion</label>
+		    <select id="seccion" name="seccion" class="form-select">
+		    	<c:forEach items="${ secciones }" var="seccion">
+		    		<option value="${ seccion.id }" >${ seccion.nombre }</option>
+		    	</c:forEach>
+		    </select>
+		  </div>
+		  <div class="w-100 d-flex justify-content-between">
+			<a class="btn btn-primary" href="VerProductos">Volver</a>
+		  	<button type="submit" class="btn btn-primary">Enviar</button>
+		  </div>
 		</form>
 	</section>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
