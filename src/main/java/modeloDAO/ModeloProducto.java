@@ -29,6 +29,27 @@ public class ModeloProducto extends Conector{
 		}
 	}
 	
+	public void mofidicarProducto(Producto producto) {
+		String st = "update productos set codigo=?, nombre=?, cantidad=?, precio=?, caducidad=?, id_seccion=? where id=?";
+		
+		try {
+			PreparedStatement pst = super.con.prepareStatement(st);
+			
+			pst.setString(1, producto.getCodigo());
+			pst.setString(2, producto.getNombre());
+			pst.setInt(3, producto.getCantidad());
+			pst.setDouble(4, producto.getPrecio());
+			pst.setDate(5, new Date(producto.getCaducidad().getTime()));
+			pst.setInt(6, producto.getSeccion().getId());
+			pst.setInt(7, producto.getId());
+			
+			pst.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public Producto getProducto(int id) {
 		String st = "SELECT * FROM productos WHERE id=?";
 		
