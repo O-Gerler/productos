@@ -83,19 +83,15 @@ public class InsertarProducto extends HttpServlet {
 		producto.setSeccion(modeloSeccion.getSeccion(id_seccion));
 		
 		if (!modeloProducto.codigoExiste(producto.getCodigo())) {
-			request.setAttribute("incorrecto", true);
 			request.setAttribute("mensaje", "El codigo ya existe");
 			doGet(request, response);
 		}else if (producto.getPrecio() < 0 && producto.getCantidad() < 0) {
-			request.setAttribute("incorrecto", true);
 			request.setAttribute("mensaje", "El precio o cantidad incorrecta");
 			doGet(request, response);
 		}else if (producto.getCaducidad().before(new Date())) {
-			request.setAttribute("incorrecto", true);
 			request.setAttribute("mensaje", "La fecha no puede ser anterior a la actual");
 			doGet(request, response);
 		}else if (producto.getSeccion().getId() == 0) {
-			request.setAttribute("incorrecto", true);
 			request.setAttribute("mensaje", "Id seccion incorrecto");
 			doGet(request, response);
 		}else {
