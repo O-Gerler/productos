@@ -29,7 +29,7 @@ public class ModeloProducto extends Conector{
 		}
 	}
 	
-	public void mofidicarProducto(Producto producto) {
+	public void modificarProducto(Producto producto) {
 		String st = "update productos set codigo=?, nombre=?, cantidad=?, precio=?, caducidad=?, id_seccion=? where id=?";
 		
 		try {
