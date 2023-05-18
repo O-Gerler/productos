@@ -82,7 +82,7 @@ public class InsertarProducto extends HttpServlet {
 		
 		producto.setSeccion(modeloSeccion.getSeccion(id_seccion));
 		
-		if (!modeloProducto.codigoExiste(producto.getCodigo())) {
+		if (modeloProducto.codigoExiste(producto.getCodigo())) {
 			request.setAttribute("mensaje", "El codigo ya existe");
 			doGet(request, response);
 		}else if (producto.getPrecio() < 0 && producto.getCantidad() < 0) {
