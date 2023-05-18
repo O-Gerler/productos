@@ -23,6 +23,7 @@
 		      <th scope="col">Precio</th>
 		      <th scope="col">Caducidad</th>
 		      <th scope="col">Seccion</th>
+		      <th scope="col">Modificar</th>
 		    </tr>
 		  </thead>
 		  <tbody>
@@ -35,6 +36,7 @@
 			      <td>${ producto.precio }</td>
 			      <td>${ producto.caducidad }</td>
 			      <td>${ producto.seccion.nombre }</td>
+			      <td><a class="btn btn-primary" href="ModificarProducto?id=${ producto.id }">Modificar</a></td>
 			    </tr>
 		  	</c:forEach>
 		  </tbody>
