@@ -88,10 +88,7 @@ public class ModificarProducto extends HttpServlet {
 		
 		producto.setSeccion(modeloSeccion.getSeccion(id_seccion));
 		
-		if (modeloProducto.codigoExiste(producto.getCodigo())) {
-			request.setAttribute("mensaje", "El codigo ya existe");
-			doGet(request, response);
-		}else if (producto.getPrecio() < 0 && producto.getCantidad() < 0) {
+		if (producto.getPrecio() < 0 && producto.getCantidad() < 0) {
 			request.setAttribute("mensaje", "El precio o cantidad incorrecta");
 			doGet(request, response);
 		}else if (producto.getCaducidad().before(new Date())) {
