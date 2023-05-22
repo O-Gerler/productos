@@ -11,6 +11,12 @@
 <body class="d-flex justify-content-center align-items-center" style="width: 100vw; min-height: 100vh">
 	<section class="container">
 		<div class="row container">
+			<form action="VerProductos" method="POST">
+				<div class="mb-3 d-flex gap-2">
+				    <input type="text" class="form-control" id="codigo" name="codigo">
+				    <input type="submit" class="btn btn-primary">
+		  		</div>
+			</form>
 			<a class="btn btn-primary" href="InsertarProducto">Insertar</a>
 		</div>
 		<table class="table table-striped">
