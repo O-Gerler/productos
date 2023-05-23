@@ -11,10 +11,21 @@
 <body class="d-flex justify-content-center align-items-center" style="width: 100vw; min-height: 100vh">
 	<section class="container">
 		<div class="row container">
+		 <input type="text" class="form-control" id="codigoJS" name="codigo">
 			<form action="VerProductos" method="POST">
 				<div class="mb-3 d-flex gap-2">
+					<label for="min" class="form-label">Precio Minimo</label>
+				    <input type="number" class="form-control" id="min" name="min">
+				    <label for="max" class="form-label">Precio Maximo</label>
+				    <input type="number" class="form-control" id="max" name="max">
+				    <input type="submit" class="btn btn-primary" value="precio" name="enviar">
+		  		</div>
+			</form>
+			<form action="VerProductos" method="POST">
+				<div class="mb-3 d-flex gap-2">
+					<label for="codigo" class="form-label">Codigo</label>
 				    <input type="text" class="form-control" id="codigo" name="codigo">
-				    <input type="submit" class="btn btn-primary">
+				    <input type="submit" class="btn btn-primary" value="nombre" name="enviar">
 		  		</div>
 			</form>
 			<a class="btn btn-primary" href="InsertarProducto">Insertar</a>
@@ -23,7 +34,7 @@
 		  <thead>
 		    <tr>
 		      <th scope="col">#</th>
-		      <th scope="col">Codigo</th>
+		      <th scope="col">Codigo <br><a href="VerProductos?orden=1">A - Z</a> <br><a href="VerProductos?orden=2">Z - A</a></th>
 		      <th scope="col">Nombre</th>
 		      <th scope="col">Cantidad</th>
 		      <th scope="col">Precio</th>
@@ -48,6 +59,22 @@
 		  </tbody>
 		</table>
 	</section>
+	<script type="text/javascript">
+		const buscador = document.getElementById('codigoJS')
+		const productos = document.querySelectorAll('tbody tr')
+		
+		
+		buscador.addEventListener('input', () => {
+			
+			productos.forEach(producto => {
+				if(producto.children[1].innerText.includes(buscador.value)){
+					producto.classList.remove('d-none')
+				}else {
+					producto.classList.add('d-none')
+				} 
+			})
+		})
+	</script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 </body>
