@@ -40,7 +40,7 @@ public class VerProductos extends HttpServlet {
 		try {
 			filtrar = Integer.parseInt(request.getParameter("orden"));
 		} catch (Exception e) {
-			// TODO: handle exception
+			filtrar = 0;
 		}
 		
 		ModeloProducto modeloProducto = new ModeloProducto();
