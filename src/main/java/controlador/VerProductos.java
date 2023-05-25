@@ -31,7 +31,6 @@ public class VerProductos extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		final int SIN_FILTRAR = 0;
 		final int FILTRAR_POR_ABC_ASC = 1;
 		final int FILTRAR_POR_ABC_DSC = 2;
 		
@@ -51,16 +50,11 @@ public class VerProductos extends HttpServlet {
 		modeloProducto.cerrar();
 		
 		switch (filtrar) {
-			case SIN_FILTRAR: 
-				request.setAttribute("productos", productos);
-				break;
 			case FILTRAR_POR_ABC_ASC:
 				productos.sort((p1, p2) -> p1.getCodigo().compareTo(p2.getCodigo()));
-				request.setAttribute("productos", productos);
 				break;
 			case FILTRAR_POR_ABC_DSC:
 				productos.sort((p1, p2) -> p2.getCodigo().compareTo(p1.getCodigo()));
-				request.setAttribute("productos", productos);
 		}
 		
 		

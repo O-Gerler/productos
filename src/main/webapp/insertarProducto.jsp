@@ -44,6 +44,16 @@
 		    	</c:forEach>
 		    </select>
 		  </div>
+		  
+		  	  <c:forEach items="${ supermercados }" var="supermercado">
+		  	  	<div class="form-check">
+		  	  	  <input class="form-check-input" type="checkbox" value="${ supermercado.id }" id="${ supermercado.id }" name="super">
+				  <label class="form-check-label" for="${ supermercado.id }">
+				    ${ supermercado.nombre }
+				  </label>
+				 </div>
+		  	  </c:forEach>
+		 
 		  <div class="w-100 d-flex justify-content-between">
 			<a class="btn btn-primary" href="VerProductos">Volver</a>
 		  	<button type="submit" class="btn btn-primary">Enviar</button>

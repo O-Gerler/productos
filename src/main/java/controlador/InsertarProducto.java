@@ -14,8 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import modeloDAO.ModeloProducto;
 import modeloDAO.ModeloSeccion;
+import modeloDAO.ModeloSupermercado;
+import modeloDAO.ModeloSupermercadoProducto;
 import modeloDTO.Producto;
 import modeloDTO.Seccion;
+import modeloDTO.Supermercado;
 
 /**
  * Servlet implementation class InsertarProducto
@@ -38,12 +41,16 @@ public class InsertarProducto extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ModeloSeccion modeloSeccion = new ModeloSeccion();
 		modeloSeccion.conectar();
+		ModeloSupermercado modeloSupermercado = new ModeloSupermercado();
+		modeloSupermercado.setCon(modeloSeccion.getCon());
 		
 		ArrayList<Seccion> secciones = modeloSeccion.getAllSecciones();
+		ArrayList<Supermercado> supermercados = modeloSupermercado.getAllSupermercados();
 		
 		modeloSeccion.cerrar();
 		
 		request.setAttribute("secciones", secciones);
+		request.setAttribute("supermercados", supermercados);
 		request.getRequestDispatcher("insertarProducto.jsp").forward(request, response);
 	}
 
@@ -57,6 +64,7 @@ public class InsertarProducto extends HttpServlet {
 		double precio = Double.parseDouble(request.getParameter("precio"));
 		String caducidad = request.getParameter("caducidad");
 		int id_seccion = Integer.parseInt(request.getParameter("seccion"));
+		String productosSuper[] = request.getParameterValues("super"); 
 		
 		Date fechaCaducidad = null;
 		
@@ -94,8 +102,24 @@ public class InsertarProducto extends HttpServlet {
 		}else if (producto.getSeccion().getId() == 0) {
 			request.setAttribute("mensaje", "Id seccion incorrecto");
 			doGet(request, response);
+		}else if (productosSuper.length == 0) {
+			request.setAttribute("mensaje", "Debes seleccionar supermercados");
+			doGet(request, response);
 		}else {
 			modeloProducto.insertarProducto(producto);
+			
+			int ultimoProducto = modeloProducto.ultimoId();
+			
+			ModeloSupermercado modeloSupermercado = new ModeloSupermercado();
+			modeloSupermercado.setCon(modeloProducto.getCon());
+			ModeloSupermercadoProducto modeloSupermercadoProducto = new ModeloSupermercadoProducto();
+			modeloSupermercadoProducto.setCon(modeloProducto.getCon());
+			
+			for (String ps : productosSuper) {
+				Producto producto2 = modeloProducto.getProducto(ultimoProducto);
+				Supermercado supermercado = modeloSupermercado.getSupermercado(Integer.parseInt(ps));
+				modeloSupermercadoProducto.insertar(producto2, supermercado);
+			}
 			
 			response.sendRedirect("VerProductos");
 		}

@@ -7,7 +7,7 @@
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-</head>
+</head>			
 <body class="d-flex justify-content-center align-items-center" style="width: 100vw; min-height: 100vh">
 	<section class="container">
 		<div class="row container">
@@ -41,6 +41,7 @@
 		      <th scope="col">Caducidad</th>
 		      <th scope="col">Seccion</th>
 		      <th scope="col">Modificar</th>
+		      <th scope="col">Eliminar</th>
 		    </tr>
 		  </thead>
 		  <tbody>
@@ -54,6 +55,7 @@
 			      <td>${ producto.caducidad }</td>
 			      <td>${ producto.seccion.nombre }</td>
 			      <td><a class="btn btn-primary" href="ModificarProducto?id=${ producto.id }">Modificar</a></td>
+			      <td><a class="btn btn-danger" href="EliminarProducto?id=${ producto.id }">Eliminar</a></td>
 			    </tr>
 		  	</c:forEach>
 		  </tbody>

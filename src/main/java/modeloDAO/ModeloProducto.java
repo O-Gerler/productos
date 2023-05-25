@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import controlador.EliminarProducto;
 import modeloDTO.Producto;
 
 public class ModeloProducto extends Conector{
@@ -21,6 +22,21 @@ public class ModeloProducto extends Conector{
 			pst.setDouble(4, producto.getPrecio());
 			pst.setDate(5, new Date(producto.getCaducidad().getTime()));
 			pst.setInt(6, producto.getSeccion().getId());
+			
+			pst.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void eliminarProducto(Producto producto) {
+		String st = "DELETE FROM productos WHERE id=?";
+		
+		try {
+			PreparedStatement pst = super.con.prepareStatement(st);
+			
+			pst.setInt(1, producto.getId());
 			
 			pst.execute();
 		} catch (SQLException e) {
@@ -48,6 +64,24 @@ public class ModeloProducto extends Conector{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public int ultimoId() {
+		String st = "SELECT max(id) FROM productos";
+		
+		try {
+			PreparedStatement pst = super.con.prepareStatement(st);
+			
+			ResultSet rs = pst.executeQuery();
+			rs.next();
+			
+			return rs.getInt("max(id)");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return 0;
 	}
 	
 	public Producto getProducto(int id) {
