@@ -10,6 +10,7 @@
 </head>			
 <body class="d-flex justify-content-center align-items-center" style="width: 100vw; min-height: 100vh">
 	<section class="container">
+		<p> Carrito ${ carrito.size() } </p>
 		<div class="row container">
 		 <input type="text" class="form-control" id="codigoJS" name="codigo">
 			<form action="VerProductos" method="POST">
@@ -47,6 +48,7 @@
 		      <th scope="col">Precio</th>
 		      <th scope="col">Caducidad</th>
 		      <th scope="col">Seccion</th>
+		      <th scope="col">Comprar</th>
 		      <th scope="col">Modificar</th>
 		      <th scope="col">Eliminar</th>
 		    </tr>
@@ -61,12 +63,24 @@
 			      <td>${ producto.precio }</td>
 			      <td>${ producto.caducidad }</td>
 			      <td>${ producto.seccion.nombre }</td>
+			      <td><a class="btn btn-success" href="AgregarCompra?id=${ producto.id }">Comprar</a></td>
 			      <td><a class="btn btn-primary" href="ModificarProducto?id=${ producto.id }">Modificar</a></td>
 			      <td><a class="btn btn-danger" href="EliminarProducto?id=${ producto.id }">Eliminar</a></td>
 			    </tr>
 		  	</c:forEach>
 		  </tbody>
 		</table>
+		<form action="VerProductos" method="POST">
+		<c:forEach items="${ productos }" var="producto">
+		  <div class="form-check">
+		  	  <input class="form-check-input" type="checkbox" value="${ producto.id }" id="${ producto.id }" name="productos">
+			  <label class="form-check-label" for="${ producto.id }">
+			    ${ producto.nombre }
+			  </label>
+		  </div>		  	  
+		 </c:forEach>
+		 <input type="submit" value="Eliminar" name="enviar" class="btn btn-danger">
+	</form>
 	</section>
 	<script type="text/javascript">
 		const buscador = document.getElementById('codigoJS')

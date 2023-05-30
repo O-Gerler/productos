@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import modeloDAO.ModeloProducto;
 import modeloDTO.Producto;
@@ -34,6 +35,11 @@ public class VerProductos extends HttpServlet {
 		final int FILTRAR_POR_ABC_ASC = 1;
 		final int FILTRAR_POR_ABC_DSC = 2;
 		
+		HttpSession session = request.getSession();
+		
+		@SuppressWarnings("unchecked")
+		ArrayList<Producto> productosCarrito = (session.getAttribute("carrito") == null ? new ArrayList<Producto>() : (ArrayList<Producto>) session.getAttribute("carrito"));
+		
 		int filtrar = 0;
 		
 		try {
@@ -57,8 +63,7 @@ public class VerProductos extends HttpServlet {
 				productos.sort((p1, p2) -> p2.getCodigo().compareTo(p1.getCodigo()));
 		}
 		
-		
-		
+		request.setAttribute("carrito", productosCarrito);
 		request.setAttribute("productos", productos);
 		request.getRequestDispatcher("verProductos.jsp").forward(request, response);
 	}
@@ -69,8 +74,16 @@ public class VerProductos extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		final String FILTRAR_POR_NOMBRE = "nombre";
 		final String FILTRAR_POR_PRECIO = "precio";
+		final String ELIMINAR_MULTIPLE = "Eliminar";
 		
 		String enviar = request.getParameter("enviar");
+		String[] productosArray = null;
+		try {
+			productosArray = request.getParameterValues("productos");
+		} catch (Exception e) {
+			productosArray = null;
+		}
+		
 		
 		ModeloProducto modeloProducto = new ModeloProducto();
 		modeloProducto.conectar();
@@ -88,6 +101,7 @@ public class VerProductos extends HttpServlet {
 					System.out.println(producto);
 				}
 			}
+			request.setAttribute("productos", productosFiltrados);
 		}else if (enviar.equals(FILTRAR_POR_PRECIO)) {
 			int min = Integer.parseInt(request.getParameter("min"));
 			int max = Integer.parseInt(request.getParameter("max"));
@@ -100,11 +114,25 @@ public class VerProductos extends HttpServlet {
 			}
 			
 			productosFiltrados.sort((p1, p2) -> p1.getPrecio() - p2.getPrecio() > 0 ? 1 : -1);
+			request.setAttribute("productos", productosFiltrados);
+		}else if (enviar.equals(ELIMINAR_MULTIPLE) && productosArray != null) {
+			for (String idProductoString : productosArray) {
+				System.out.println("a");
+				Producto producto = modeloProducto.getProducto(Integer.parseInt(idProductoString));
+				modeloProducto.eliminarProducto(producto);
+			}
+			request.setAttribute("productos", modeloProducto.getAllProductos());
+		}else {
+			request.setAttribute("productos", productos);
 		}
 		
+		HttpSession session = request.getSession();
+		
+		@SuppressWarnings("unchecked")
+		ArrayList<Producto> productosCarrito = (ArrayList<Producto>) (session.getAttribute("carrito") == null ? new ArrayList<Producto>() : session.getAttribute("carrito"));
 		
 		
-		request.setAttribute("productos", productosFiltrados);
+		request.setAttribute("carrito", productosCarrito);
 		request.getRequestDispatcher("verProductos.jsp").forward(request, response);
 	}
 
