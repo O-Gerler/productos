@@ -21,6 +21,13 @@
 				    <input type="submit" class="btn btn-primary" value="precio" name="enviar">
 		  		</div>
 			</form>
+			<form action="EliminarProducto" method="POST">
+				<div class="mb-3 d-flex gap-2">
+					<label for="min" class="form-label">Eliminar Varios</label>
+				    <textarea class="form-control" id="exampleFormControlTextarea1" name="eliminar" placeholder="Escribe los elementos a eliminar" rows="3"></textarea>
+				    <input type="submit" class="btn btn-primary" value="Eliminar" name="enviar">
+		  		</div>
+			</form>
 			<form action="VerProductos" method="POST">
 				<div class="mb-3 d-flex gap-2">
 					<label for="codigo" class="form-label">Codigo</label>

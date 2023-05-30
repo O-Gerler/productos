@@ -106,6 +106,28 @@ public class ModeloProducto extends Conector{
 		return null;
 	}
 	
+	public Producto getProductoPorCoigo(String codigo) {
+		String st = "SELECT * FROM productos WHERE codigo=?";
+		
+		try {
+			PreparedStatement pst = super.con.prepareStatement(st);
+			ModeloSeccion modeloSeccion = new ModeloSeccion();
+			modeloSeccion.setCon(this.getCon());
+			
+			pst.setString(1, codigo);;
+			
+			ResultSet rs = pst.executeQuery();
+			rs.next();
+			
+			return rellenarProducto(modeloSeccion, rs);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
 	public boolean codigoExiste(String codigo) {
 		String st = "select codigo from productos where codigo=?";
 		
@@ -151,16 +173,21 @@ public class ModeloProducto extends Conector{
 		return null;
 	}
 
-	private Producto rellenarProducto(ModeloSeccion modeloSeccion, ResultSet rs) throws SQLException {
+	private Producto rellenarProducto(ModeloSeccion modeloSeccion, ResultSet rs){
 		Producto producto = new Producto();
+		try {
+			producto.setId(rs.getInt("id"));
+			producto.setCodigo(rs.getString("codigo"));
+			producto.setNombre(rs.getString("nombre"));
+			producto.setCantidad(rs.getInt("cantidad"));
+			producto.setPrecio(rs.getDouble("precio"));
+			producto.setCaducidad(rs.getDate("caducidad"));
+			producto.setSeccion(modeloSeccion.getSeccion(rs.getInt("id_seccion")));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			producto = null;
+		}
 		
-		producto.setId(rs.getInt("id"));
-		producto.setCodigo(rs.getString("codigo"));
-		producto.setNombre(rs.getString("nombre"));
-		producto.setCantidad(rs.getInt("cantidad"));
-		producto.setPrecio(rs.getDouble("precio"));
-		producto.setCaducidad(rs.getDate("caducidad"));
-		producto.setSeccion(modeloSeccion.getSeccion(rs.getInt("id_seccion")));
 		return producto;
 	}
 }

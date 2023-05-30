@@ -61,8 +61,44 @@ public class EliminarProducto extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String filaEliminar = request.getParameter("eliminar");
+		
+		String[] eliminar = filaEliminar.split(",");
+		
+		ModeloProducto modeloProducto = new ModeloProducto();
+		modeloProducto.conectar();
+
+		if (comprobarProductosExiste(eliminar, modeloProducto)) {
+			ModeloSupermercadoProducto modeloSupermercadoProducto = new ModeloSupermercadoProducto();
+			modeloSupermercadoProducto.setCon(modeloProducto.getCon());
+			
+			for (String codigo: eliminar) {
+				Producto producto = modeloProducto.getProductoPorCoigo(codigo.trim());
+				
+				ArrayList<SuperProducto> superProductos = modeloSupermercadoProducto.getSuperProductosPorIdProducto(producto.getId());
+				
+				if(producto.getCantidad() > 0) {
+					producto.setCantidad(producto.getCantidad() - 1);
+					modeloProducto.modificarProducto(producto);
+				}else if(superProductos.size() > 0 && producto.getCantidad() == 0) {
+					modeloSupermercadoProducto.eliminar(producto);
+				}else if (superProductos.size() == 0 && producto.getCantidad() == 0) {
+					modeloProducto.eliminarProducto(producto);
+				}
+			}
+		}
+		
+		response.sendRedirect("VerProductos");
+	}
+
+	private boolean comprobarProductosExiste(String[] eliminar, ModeloProducto modeloProducto) {
+		for (String codigo : eliminar) {
+			if(modeloProducto.getProductoPorCoigo(codigo) == null) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 
 }
