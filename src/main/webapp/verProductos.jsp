@@ -10,7 +10,7 @@
 </head>			
 <body class="d-flex justify-content-center align-items-center" style="width: 100vw; min-height: 100vh">
 	<section class="container">
-		<p> Carrito ${ carrito.size() } </p>
+		<p> Carrito ${ carrito.size() }  <a class="btn btn-primary" href="Comprar">Comprar</a></p>
 		<div class="row container">
 		 <input type="text" class="form-control" id="codigoJS" name="codigo">
 			<form action="VerProductos" method="POST">
